@@ -1,0 +1,62 @@
+[
+    {
+        "MedicationName": "Amoxicillin",
+        "Dosage": "500 mg",
+        "Frequency": "Twice daily",
+        "Instructions": "Give with food",
+        "StartDate": "2025-05-01",
+        "EndDate": "2025-05-10",
+        "PatientId": 1,
+        "VetId": 6
+    },
+    {
+        "MedicationName": "Prednisolone",
+        "Dosage": "5 mg",
+        "Frequency": "Once daily",
+        "Instructions": "Administer in the morning",
+        "StartDate": "2025-05-03",
+        "EndDate": "2025-05-13",
+        "PatientId": 3,
+        "VetId": 2
+    },
+    {
+        "MedicationName": "Metacam",
+        "Dosage": "0.5 mg/kg",
+        "Frequency": "Once daily",
+        "Instructions": "For pain relief",
+        "StartDate": "2025-05-04",
+        "EndDate": "2025-05-09",
+        "PatientId": 4,
+        "VetId": 1
+    },
+    {
+        "MedicationName": "Clavamox",
+        "Dosage": "62.5 mg",
+        "Frequency": "Twice daily",
+        "Instructions": "Give with water",
+        "StartDate": "2025-05-06",
+        "EndDate": "2025-05-16",
+        "PatientId": 5,
+        "VetId": 5
+    },
+    {
+        "MedicationName": "Cephalexin",
+        "Dosage": "250 mg",
+        "Frequency": "Twice daily",
+        "Instructions": "Give with food",
+        "StartDate": "2025-05-07",
+        "EndDate": "2025-05-14",
+        "PatientId": 6,
+        "VetId":3
+    },
+    {
+        "MedicationName": "Gabapentin",
+        "Dosage": "100 mg",
+        "Frequency": "Once daily",
+        "Instructions": "For pain relief",
+        "StartDate": "2025-05-08",
+        "EndDate": "2025-05-18",
+        "PatientId": 7,
+        "VetId": 4
+    }
+]

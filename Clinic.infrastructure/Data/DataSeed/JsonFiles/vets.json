@@ -1,0 +1,72 @@
+[
+  {
+
+    "Name": "Dr. Smith",
+    "Age": 40,
+    "email": "smith@clinic.com",
+    "DateOfGraduation": "2005-06-15",
+    "ISActive": true,
+    "DepartmentId": 1
+  },
+  {
+
+    "Name": "Dr. Jones",
+    "Age": 35,
+    "email": "jones@clinic.com",
+    "DateOfGraduation": "2010-05-20",
+    "ISActive": true,
+    "DepartmentId": 2
+  },
+  {
+
+    "Name": "Dr. Brown",
+    "Age": 45,
+    "email": "brown@clinic.com",
+    "DateOfGraduation": "2000-07-10",
+    "ISActive": true,
+    "DepartmentId": 3
+  },
+  {
+
+    "Name": "Dr. Wilson",
+    "Age": 38,
+    "email": "wilson@clinic.com",
+    "DateOfGraduation": "2008-06-01",
+    "ISActive": true,
+    "DepartmentId": 4
+  },
+  {
+
+    "Name": "Dr. Taylor",
+    "Age": 42,
+    "email": "taylor@clinic.com",
+    "DateOfGraduation": "2003-05-15",
+    "ISActive": true,
+    "DepartmentId": 5
+  },
+  {
+
+    "Name": "Dr. Harris",
+    "Age": 37,
+    "email": "harris@clinic.com",
+    "DateOfGraduation": "2009-06-20",
+    "ISActive": true,
+    "DepartmentId": 6
+  },
+  {
+    "Name": "Dr. Green",
+    "Age": 41,
+    "email": "green@clinic.com",
+    "DateOfGraduation": "2004-04-10",
+    "ISActive": true,
+    "DepartmentId": 7
+  },
+  {
+    "Name": "Dr. King",
+    "Age": 50,
+    "email": "king@clinic.com",
+    "DateOfGraduation": "1995-03-25",
+    "ISActive": true,
+    "DepartmentId": 8
+  }
+]

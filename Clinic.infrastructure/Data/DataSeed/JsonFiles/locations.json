@@ -1,0 +1,98 @@
+[
+  {
+    "Name": "Main Branch",
+    "Address": "123 Clinic St",
+    "Description": "Central clinic location",
+    "PhoneNumber": "555-0201",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Westside Branch",
+    "Address": "456 West Ave",
+    "Description": "Branch serving the western part of the city",
+    "PhoneNumber": "555-0202",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Eastside Branch",
+    "Address": "789 East Blvd",
+    "Description": "Branch serving the eastern part of the city",
+    "PhoneNumber": "555-0203",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Northside Branch",
+    "Address": "101 North Rd",
+    "Description": "Branch serving the northern part of the city",
+    "PhoneNumber": "555-0204",
+    "Capacity": 10,
+    "IsActive": false
+  },
+  {
+    "Name": "Southside Branch",
+    "Address": "202 South Ln",
+    "Description": "Branch serving the southern part of the city",
+    "PhoneNumber": "555-0205",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Riverside Branch",
+    "Address": "303 River Dr",
+    "Description": "Branch located near the river, offering emergency services",
+    "PhoneNumber": "555-0206",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Hillside Branch",
+    "Address": "404 Hill St",
+    "Description": "Branch in the hilly area, specializing in orthopedics",
+    "PhoneNumber": "555-0207",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Lakeside Branch",
+    "Address": "505 Lake Rd",
+    "Description": "Branch near the lake, focused on dermatology",
+    "PhoneNumber": "555-0208",
+    "Capacity": 10,
+    "IsActive": false
+  },
+  {
+    "Name": "Downtown Branch",
+    "Address": "606 City Center",
+    "Description": "Branch in the downtown area, offering 24/7 care",
+    "PhoneNumber": "555-0209",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Suburban Branch",
+    "Address": "707 Suburb Way",
+    "Description": "Branch in the suburbs, providing general care",
+    "PhoneNumber": "555-0210",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Coastal Branch",
+    "Address": "808 Beach Blvd",
+    "Description": "Branch near the coast, specializing in behavioral medicine",
+    "PhoneNumber": "555-0211",
+    "Capacity": 10,
+    "IsActive": true
+  },
+  {
+    "Name": "Mountain Branch",
+    "Address": "909 Mountain Pass",
+    "Description": "Branch in the mountains, temporarily closed for renovations",
+    "PhoneNumber": "555-0212",
+    "Capacity": 10,
+    "IsActive": false
+  }
+]

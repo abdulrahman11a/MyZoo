@@ -1,0 +1,58 @@
+[
+  {
+    "VetId": 1,
+    "LocationId": 1,
+    "StartTime": "2025-05-03T08:00:00Z",
+    "EndTime": "2025-05-03T12:00:00Z",
+    "Capacity": 2,
+    "ScheduleGroup": 0
+  },
+  {
+    "VetId":2,
+    "LocationId": 2,
+    "StartTime": "2025-05-01T09:00:00Z",
+    "EndTime": "2025-05-01T13:00:00Z",
+    "Capacity": 1,
+    "ScheduleGroup": 0
+  },
+  {
+    "VetId": 3,
+    "LocationId": 3,
+    "StartTime": "2025-05-02T13:00:00Z",
+    "EndTime": "2025-05-02T17:00:00Z",
+    "Capacity": 3,
+    "ScheduleGroup": 1
+  },
+  {
+    "VetId": 4,
+    "LocationId": 4,
+    "StartTime": "2025-05-05T14:00:00Z",
+    "EndTime": "2025-05-05T18:00:00Z",
+    "Capacity": 2,
+    "ScheduleGroup": 0
+  },
+  {
+    "VetId":3,
+    "LocationId": 5,
+    "StartTime": "2025-05-04T10:00:00Z",
+    "EndTime": "2025-05-04T14:00:00Z",
+    "Capacity": 1,
+    "ScheduleGroup": 2
+  },
+  {
+    "VetId": 8,
+    "LocationId": 6,
+    "StartTime": "2025-05-06T08:30:00Z",
+    "EndTime": "2025-05-06T12:30:00Z",
+    "Capacity": 2,
+    "ScheduleGroup": 1
+  },
+  {
+    "VetId": 5,
+    "LocationId": 7,
+    "StartTime": "2025-05-07T13:00:00Z",
+    "EndTime": "2025-05-07T17:00:00Z",
+    "Capacity": 3,
+    "ScheduleGroup": 1
+  }
+]

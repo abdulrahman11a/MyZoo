@@ -1,0 +1,42 @@
+[
+  {
+    "DeptName": "Surgery",
+    "Description": "Handles surgical procedures including preoperative, operative, and postoperative care."
+  },
+  {
+    "DeptName": "General Medicine",
+    "Description": "Provides diagnosis and treatment for a wide range of adult illnesses and conditions."
+  },
+  {
+    "DeptName": "Dermatology",
+    "Description": "Specializes in the treatment of skin, hair, and nail conditions."
+  },
+  {
+    "DeptName": "Dentistry",
+    "Description": "Focuses on oral health, including teeth, gums, and related structures."
+  },
+  {
+    "DeptName": "Cardiology",
+    "Description": "Deals with disorders of the heart and blood vessels."
+  },
+  {
+    "DeptName": "Oncology",
+    "Description": "Specializes in the diagnosis and treatment of cancer."
+  },
+  {
+    "DeptName": "Orthopedics",
+    "Description": "Cares for the musculoskeletal system, including bones, joints, ligaments, and muscles."
+  },
+  {
+    "DeptName": "Neurology",
+    "Description": "Focuses on disorders of the nervous system including the brain, spinal cord, and nerves."
+  },
+  {
+    "DeptName": "Emergency Care",
+    "Description": "Provides immediate medical attention for urgent and life-threatening conditions."
+  },
+  {
+    "DeptName": "Behavioral Medicine",
+    "Description": "Addresses mental health issues and promotes psychological well-being."
+  }
+]

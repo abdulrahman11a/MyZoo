@@ -1,0 +1,98 @@
+[
+  {
+    "Id": 1,
+    "FullName": "Buddy",
+    "Email": "owner1@example.com",
+    "Address": "123 Pet St, Cityville",
+    "PhoneNumber": "555-0101",
+    "ISActive": true
+  },
+  {
+    "Id": 2,
+    "FullName": "Luna",
+    "Email": "owner2@example.com",
+    "Address": "456 Pet Ave, Townsville",
+    "PhoneNumber": "555-0102",
+    "ISActive": true
+  },
+  {
+    "Id": 3,
+    "FullName": "Max",
+    "Email": "owner3@example.com",
+    "Address": "789 Pet Blvd, Villagetown",
+    "PhoneNumber": "555-0103",
+    "ISActive": true
+  },
+  {
+    "Id": 4,
+    "FullName": "Coco",
+    "Email": "owner4@example.com",
+    "Address": "101 Pet Lane, Suburbia",
+    "PhoneNumber": "555-0104",
+    "ISActive": true
+  },
+  {
+    "Id": 5,
+    "FullName": "Rocky",
+    "Email": "owner5@example.com",
+    "Address": "202 Pet Road, Countryside",
+    "PhoneNumber": "555-0105",
+    "ISActive": false
+  },
+  {
+    "Id": 6,
+    "FullName": "Bella",
+    "Email": "owner6@example.com",
+    "Address": "303 Pet Circle, Downtown",
+    "PhoneNumber": "555-0106",
+    "ISActive": true
+  },
+  {
+    "Id": 7,
+    "FullName": "Charlie",
+    "Email": "owner7@example.com",
+    "Address": "404 Pet Way, Uptown",
+    "PhoneNumber": "555-0107",
+    "ISActive": true
+  },
+  {
+    "Id": 8,
+    "FullName": "Daisy",
+    "Email": "owner8@example.com",
+    "Address": "505 Pet Blvd, Greenfield",
+    "PhoneNumber": "555-0108",
+    "ISActive": true
+  },
+  {
+    "Id": 9,
+    "FullName": "Oscar",
+    "Email": "owner9@example.com",
+    "Address": "606 Pet Drive, Lakeview",
+    "PhoneNumber": "555-0109",
+    "ISActive": false
+  },
+  {
+    "Id": 10,
+    "FullName": "Sadie",
+    "Email": "owner10@example.com",
+    "Address": "707 Pet Way, Hilltop",
+    "PhoneNumber": "555-0110",
+    "ISActive": true
+  },
+  {
+    "Id": 11,
+    "FullName": "Ziggy",
+    "Email": "owner11@example.com",
+    "Address": "808 Pet Blvd, Mountainview",
+    "PhoneNumber": "555-0111",
+    "ISActive": true
+  },
+  {
+    "Id": 12,
+    "FullName": "Milo",
+    "Email": "owner12@example.com",
+    "Address": "909 Pet Lane, Riverside",
+    "PhoneNumber": "555-0112",
+    "ISActive": false
+  }
+]

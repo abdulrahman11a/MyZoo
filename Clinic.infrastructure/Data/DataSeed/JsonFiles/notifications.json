@@ -1,0 +1,11 @@
+[
+    {
+        "Title": "Appointment Reminder",
+        "Message": "Your appointment is scheduled for tomorrow.",
+        "CreatedAt": "2025-04-18T15:30:00",
+        "VetId": 2,
+        "PatientId": 1,
+        "NotificationType": 1,
+        "Status": 0
+    }
+]
