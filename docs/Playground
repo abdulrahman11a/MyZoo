@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Playground - MyZoo API Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .playground-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .endpoints-sidebar {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+            max-height: calc(100vh - 120px);
+            overflow-y: auto;
+        }
+
+        .sidebar-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .endpoint-category-sidebar {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-title-sidebar {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .endpoint-list-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .endpoint-btn {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: 'Manrope', sans-serif;
+            color: var(--text);
+            text-align: left;
+        }
+
+        .endpoint-btn:hover {
+            background: var(--bg-darker);
+            border-color: var(--primary);
+            transform: translateX(4px);
+        }
+
+        .endpoint-btn.active {
+            background: var(--bg-darker);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .method-badge-small {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.625rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .endpoint-path-small {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .playground-main {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .request-section {
+            margin-bottom: 2rem;
+        }
+
+        .request-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .request-method {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+        }
+
+        .request-url {
+            flex: 1;
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+
+        .request-url:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .section-label {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .params-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .param-row {
+            display: grid;
+            grid-template-columns: 150px 1fr 100px;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .param-input {
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 0.75rem;
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+        }
+
+        .param-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .body-editor {
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text);
+            font-size: 0.875rem;
+            line-height: 1.6;
+            min-height: 200px;
+            resize: vertical;
+            width: 100%;
+        }
+
+        .body-editor:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .send-btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--text);
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+            margin-top: 2rem;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .response-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 0.875rem;
+        }
+
+        .status-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .status-error {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .response-time {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+        }
+
+        .response-body {
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .response-body pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--text);
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .json-key {
+            color: #93C5FD;
+        }
+
+        .json-string {
+            color: #86EFAC;
+        }
+
+        .json-number {
+            color: #FCD34D;
+        }
+
+        .json-boolean {
+            color: #C4B5FD;
+        }
+
+        .json-null {
+            color: #9CA3AF;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-dim);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            font-family: 'Manrope', sans-serif;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab:hover {
+            color: var(--text);
+        }
+
+        .sample-data-btn {
+            background: var(--bg-darker);
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .sample-data-btn:hover {
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        @media (max-width: 1024px) {
+            .playground-container {
+                grid-template-columns: 1fr;
+            }
+
+            .endpoints-sidebar {
+                position: relative;
+                top: 0;
+                max-height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">🦁</div>
+                MyZoo API
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="api.html">API Reference</a></li>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="playground.html" class="active">Playground</a></li>
+                <li><a href="https://github.com" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>API Playground</h1>
+        <p class="hero-description">Test API endpoints in real-time and see live responses</p>
+    </section>
+
+    <div class="container">
+        <div class="playground-container">
+            <!-- Sidebar -->
+            <aside class="endpoints-sidebar">
+                <h3 class="sidebar-title">Endpoints</h3>
+                
+                <div class="endpoint-category-sidebar">
+                    <div class="category-title-sidebar">👤 Account</div>
+                    <div class="endpoint-list-sidebar">
+                        <button class="endpoint-btn" data-method="POST" data-path="/api/v1/Account/login">
+                            <span class="method-badge-small method-post">POST</span>
+                            <span class="endpoint-path-small">/Account/login</span>
+                        </button>
+                        <button class="endpoint-btn" data-method="GET" data-path="/api/v1/Account/get-user">
+                            <span class="method-badge-small method-get">GET</span>
+                            <span class="endpoint-path-small">/Account/get-user</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint-category-sidebar">
+                    <div class="category-title-sidebar">📅 Appointments</div>
+                    <div class="endpoint-list-sidebar">
+                        <button class="endpoint-btn" data-method="GET" data-path="/api/v1/Appointments">
+                            <span class="method-badge-small method-get">GET</span>
+                            <span class="endpoint-path-small">/Appointments</span>
+                        </button>
+                        <button class="endpoint-btn" data-method="POST" data-path="/api/v1/Appointments">
+                            <span class="method-badge-small method-post">POST</span>
+                            <span class="endpoint-path-small">/Appointments</span>
+                        </button>
+                        <button class="endpoint-btn" data-method="GET" data-path="/api/v1/Appointments/{id}">
+                            <span class="method-badge-small method-get">GET</span>
+                            <span class="endpoint-path-small">/Appointments/{id}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint-category-sidebar">
+                    <div class="category-title-sidebar">🐾 Patient</div>
+                    <div class="endpoint-list-sidebar">
+                        <button class="endpoint-btn" data-method="GET" data-path="/api/v1/Patient">
+                            <span class="method-badge-small method-get">GET</span>
+                            <span class="endpoint-path-small">/Patient</span>
+                        </button>
+                        <button class="endpoint-btn" data-method="POST" data-path="/api/v1/Patient">
+                            <span class="method-badge-small method-post">POST</span>
+                            <span class="endpoint-path-small">/Patient</span>
+                        </button>
+                        <button class="endpoint-btn" data-method="GET" data-path="/api/v1/Patient/{id}">
+                            <span class="method-badge-small method-get">GET</span>
+                            <span class="endpoint-path-small">/Patient/{id}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint-category-sidebar">
+                    <div class="category-title-sidebar">👨‍⚕️ Vet</div>
+                    <div class="endpoint-list-sidebar">
+                        <button class="endpoint-btn" data-method="GET" data-path="/api/v1/Vet/GetAllVet">
+                            <span class="method-badge-small method-get">GET</span>
+                            <span class="endpoint-path-small">/Vet/GetAllVet</span>
+                        </button>
+                        <button class="endpoint-btn" data-method="GET" data-path="/api/v1/Vet/GetVetById/{id}">
+                            <span class="method-badge-small method-get">GET</span>
+                            <span class="endpoint-path-small">/Vet/GetVetById/{id}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="endpoint-category-sidebar">
+                    <div class="category-title-sidebar">💊 Prescription</div>
+                    <div class="endpoint-list-sidebar">
+                        <button class="endpoint-btn" data-method="POST" data-path="/api/v1/Prescription/Create">
+                            <span class="method-badge-small method-post">POST</span>
+                            <span class="endpoint-path-small">/Prescription/Create</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Playground Area -->
+            <main class="playground-main">
+                <div class="request-section">
+                    <div class="request-header">
+                        <div id="requestMethod" class="request-method method-get">GET</div>
+                        <input 
+                            type="text" 
+                            id="requestUrl" 
+                            class="request-url" 
+                            value="https://api.myzoo.com/api/v1/Patient"
+                            placeholder="Enter API endpoint URL"
+                        >
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="tabs">
+                        <button class="tab active" data-tab="params">Parameters</button>
+                        <button class="tab" data-tab="body">Body</button>
+                        <button class="tab" data-tab="headers">Headers</button>
+                    </div>
+
+                    <!-- Parameters Tab -->
+                    <div id="paramsTab" class="tab-content">
+                        <div class="section-label">Query Parameters</div>
+                        <div class="params-grid" id="paramsGrid">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">📋</div>
+                                <p>No parameters required for this endpoint</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Body Tab -->
+                    <div id="bodyTab" class="tab-content" style="display: none;">
+                        <div class="section-label">Request Body (JSON)</div>
+                        <button class="sample-data-btn" onclick="fillSampleData()">📝 Fill Sample Data</button>
+                        <textarea 
+                            id="requestBody" 
+                            class="body-editor" 
+                            placeholder="Enter JSON body here..."
+                        ></textarea>
+                    </div>
+
+                    <!-- Headers Tab -->
+                    <div id="headersTab" class="tab-content" style="display: none;">
+                        <div class="section-label">Request Headers</div>
+                        <div class="params-grid">
+                            <div class="param-row">
+                                <input type="text" class="param-input" value="Content-Type" readonly>
+                                <input type="text" class="param-input" value="application/json" readonly>
+                            </div>
+                            <div class="param-row">
+                                <input type="text" class="param-input" value="Authorization" placeholder="Key">
+                                <input type="text" class="param-input" id="authToken" placeholder="Bearer {token}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="send-btn" onclick="sendRequest()">🚀 Send Request</button>
+                </div>
+
+                <!-- Response Section -->
+                <div class="response-section" id="responseSection" style="display: none;">
+                    <div class="response-header">
+                        <div>
+                            <div class="section-label">Response</div>
+                            <span id="statusBadge" class="status-badge status-success">200 OK</span>
+                        </div>
+                        <span id="responseTime" class="response-time">Response time: 245ms</span>
+                    </div>
+                    <div class="response-body">
+                        <pre id="responseBody"></pre>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo">
+                    <div class="logo-icon">🦁</div>
+                    MyZoo API
+                </div>
+                <p class="footer-description">Modern veterinary clinic management system with comprehensive API</p>
+            </div>
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="api.html">API Reference</a></li>
+                    <li><a href="architecture.html">Architecture</a></li>
+                    <li><a href="playground.html">API Playground</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://github.com" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">API Status</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Changelog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Stack Overflow</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 MyZoo API. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data templates
+        const sampleData = {
+            '/api/v1/Account/login': {
+                email: "demo@myzoo.com",
+                password: "Demo123!"
+            },
+            '/api/v1/Patient': {
+                name: "Max",
+                species: "Dog",
+                breed: "Golden Retriever",
+                dateOfBirth: "2020-05-15",
+                ownerId: "user123",
+                weight: 30.5,
+                isActive: true
+            },
+            '/api/v1/Appointments': {
+                patientId: 1,
+                vetId: 1,
+                appointmentDate: "2026-03-01T10:00:00",
+                reason: "Annual checkup",
+                status: "Scheduled"
+            },
+            '/api/v1/Prescription/Create': {
+                patientId: 1,
+                vetId: 1,
+                medication: "Amoxicillin",
+                dosage: "250mg twice daily",
+                duration: "7 days",
+                instructions: "Take with food"
+            }
+        };
+
+        // Mock responses
+        const mockResponses = {
+            '/api/v1/Patient': {
+                data: [
+                    {
+                        id: 1,
+                        name: "Max",
+                        species: "Dog",
+                        breed: "Golden Retriever",
+                        dateOfBirth: "2020-05-15",
+                        age: 5,
+                        weight: 30.5,
+                        isActive: true,
+                        ownerId: "user123"
+                    },
+                    {
+                        id: 2,
+                        name: "Luna",
+                        species: "Cat",
+                        breed: "Persian",
+                        dateOfBirth: "2021-03-20",
+                        age: 4,
+                        weight: 4.2,
+                        isActive: true,
+                        ownerId: "user456"
+                    },
+                    {
+                        id: 3,
+                        name: "Charlie",
+                        species: "Dog",
+                        breed: "Labrador",
+                        dateOfBirth: "2019-08-10",
+                        age: 6,
+                        weight: 32.0,
+                        isActive: true,
+                        ownerId: "user789"
+                    }
+                ],
+                count: 3,
+                message: "Patients retrieved successfully"
+            },
+            '/api/v1/Vet/GetAllVet': {
+                data: [
+                    {
+                        id: 1,
+                        name: "Dr. Sarah Johnson",
+                        specialization: "General Practice",
+                        email: "sarah.johnson@myzoo.com",
+                        phone: "+1-555-0101",
+                        isActive: true,
+                        departmentId: 1
+                    },
+                    {
+                        id: 2,
+                        name: "Dr. Michael Chen",
+                        specialization: "Surgery",
+                        email: "michael.chen@myzoo.com",
+                        phone: "+1-555-0102",
+                        isActive: true,
+                        departmentId: 2
+                    }
+                ],
+                count: 2,
+                message: "Veterinarians retrieved successfully"
+            },
+            '/api/v1/Appointments': {
+                data: [
+                    {
+                        id: 1,
+                        patientId: 1,
+                        patientName: "Max",
+                        vetId: 1,
+                        vetName: "Dr. Sarah Johnson",
+                        appointmentDate: "2026-03-01T10:00:00",
+                        reason: "Annual checkup",
+                        status: "Scheduled",
+                        createdAt: "2026-02-14T09:30:00"
+                    },
+                    {
+                        id: 2,
+                        patientId: 2,
+                        patientName: "Luna",
+                        vetId: 2,
+                        vetName: "Dr. Michael Chen",
+                        appointmentDate: "2026-03-02T14:30:00",
+                        reason: "Dental cleaning",
+                        status: "Scheduled",
+                        createdAt: "2026-02-14T11:15:00"
+                    }
+                ],
+                count: 2,
+                message: "Appointments retrieved successfully"
+            }
+        };
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
+                
+                this.classList.add('active');
+                const tabName = this.dataset.tab;
+                document.getElementById(tabName + 'Tab').style.display = 'block';
+            });
+        });
+
+        // Endpoint selection
+        document.querySelectorAll('.endpoint-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.endpoint-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const method = this.dataset.method;
+                const path = this.dataset.path;
+                
+                const methodBadge = document.getElementById('requestMethod');
+                methodBadge.textContent = method;
+                methodBadge.className = 'request-method method-' + method.toLowerCase();
+                
+                document.getElementById('requestUrl').value = 'https://api.myzoo.com' + path;
+                document.getElementById('requestBody').value = '';
+                document.getElementById('responseSection').style.display = 'none';
+            });
+        });
+
+        // Fill sample data
+        function fillSampleData() {
+            const url = document.getElementById('requestUrl').value;
+            const path = url.replace('https://api.myzoo.com', '');
+            
+            const data = sampleData[path];
+            if (data) {
+                document.getElementById('requestBody').value = JSON.stringify(data, null, 2);
+            }
+        }
+
+        // Send request (mock)
+        async function sendRequest() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Sending...';
+            
+            const url = document.getElementById('requestUrl').value;
+            const method = document.getElementById('requestMethod').textContent;
+            const path = url.replace('https://api.myzoo.com', '');
+            
+            // Simulate API delay
+            await new Promise(resolve => setTimeout(resolve, 800));
+            
+            // Get mock response
+            let response = mockResponses[path] || {
+                message: "This is a demo response. In production, this would call the real API.",
+                success: true,
+                timestamp: new Date().toISOString()
+            };
+            
+            // If POST request, show created response
+            if (method === 'POST') {
+                const bodyText = document.getElementById('requestBody').value;
+                if (bodyText) {
+                    try {
+                        const body = JSON.parse(bodyText);
+                        response = {
+                            success: true,
+                            message: "Resource created successfully",
+                            data: {
+                                id: Math.floor(Math.random() * 1000),
+                                ...body,
+                                createdAt: new Date().toISOString()
+                            }
+                        };
+                    } catch (e) {
+                        response = {
+                            success: false,
+                            message: "Invalid JSON in request body",
+                            error: e.message
+                        };
+                    }
+                }
+            }
+            
+            // Display response
+            displayResponse(response, 200, 245 + Math.random() * 200);
+            
+            btn.disabled = false;
+            btn.textContent = '🚀 Send Request';
+        }
+
+        // Display response
+        function displayResponse(data, status, time) {
+            document.getElementById('responseSection').style.display = 'block';
+            
+            const statusBadge = document.getElementById('statusBadge');
+            statusBadge.textContent = status + ' ' + (status === 200 ? 'OK' : 'Error');
+            statusBadge.className = 'status-badge ' + (status === 200 ? 'status-success' : 'status-error');
+            
+            document.getElementById('responseTime').textContent = `Response time: ${Math.floor(time)}ms`;
+            
+            const formatted = syntaxHighlight(JSON.stringify(data, null, 2));
+            document.getElementById('responseBody').innerHTML = formatted;
+            
+            // Scroll to response
+            document.getElementById('responseSection').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Syntax highlighting for JSON
+        function syntaxHighlight(json) {
+            json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+                let cls = 'json-number';
+                if (/^"/.test(match)) {
+                    if (/:$/.test(match)) {
+                        cls = 'json-key';
+                    } else {
+                        cls = 'json-string';
+                    }
+                } else if (/true|false/.test(match)) {
+                    cls = 'json-boolean';
+                } else if (/null/.test(match)) {
+                    cls = 'json-null';
+                }
+                return '<span class="' + cls + '">' + match + '</span>';
+            });
+        }
+    </script>
+</body>
+</html>
