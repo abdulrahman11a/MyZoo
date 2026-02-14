@@ -3,555 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyZoo API Documentation</title>
+    <title>MyZoo - Veterinary Clinic Management System</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #0EA5E9;
-            --primary-dark: #0284C7;
-            --secondary: #8B5CF6;
-            --success: #10B981;
-            --warning: #F59E0B;
-            --danger: #EF4444;
-            --bg-dark: #0F172A;
-            --bg-darker: #020617;
-            --bg-card: #1E293B;
-            --text: #F1F5F9;
-            --text-dim: #94A3B8;
-            --border: #334155;
-            --code-bg: #1E293B;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-darker);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .animated-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .animated-bg::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 20%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
-            animation: float 20s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-        }
-
-        /* Header */
-        header {
-            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--bg-card) 100%);
-            border-bottom: 1px solid var(--border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        nav {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-size: 1.75rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover {
-            color: var(--text);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        /* Hero Section */
-        .hero {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 6rem 2rem 4rem;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-dim);
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            animation: fadeInUp 0.6s ease-out 0.2s backwards;
-        }
-
-        .version-badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-            animation: fadeInUp 0.6s ease-out 0.4s backwards;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Quick Stats */
-        .quick-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            max-width: 1000px;
-            margin: 0 auto 4rem;
-            padding: 0 2rem;
-        }
-
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: fadeInUp 0.6s ease-out backwards;
-        }
-
-        .stat-card:nth-child(1) { animation-delay: 0.5s; }
-        .stat-card:nth-child(2) { animation-delay: 0.6s; }
-        .stat-card:nth-child(3) { animation-delay: 0.7s; }
-        .stat-card:nth-child(4) { animation-delay: 0.8s; }
-
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(14, 165, 233, 0.2);
-            border-color: var(--primary);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stat-label {
-            color: var(--text-dim);
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .section {
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 4px;
-        }
-
-        .section-description {
-            color: var(--text-dim);
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
-            padding-left: 2rem;
-        }
-
-        /* Endpoint Grid */
-        .endpoint-grid {
-            display: grid;
-            gap: 1.5rem;
-        }
-
-        .endpoint-category {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .endpoint-category:hover {
-            box-shadow: 0 8px 32px rgba(14, 165, 233, 0.15);
-            border-color: var(--primary);
-        }
-
-        .category-header {
-            background: linear-gradient(135deg, var(--bg-dark), var(--bg-card));
-            padding: 1.5rem 2rem;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .category-header:hover {
-            background: linear-gradient(135deg, var(--bg-dark), var(--bg-darker));
-        }
-
-        .category-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .category-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-        }
-
-        .category-count {
-            background: var(--bg-darker);
-            color: var(--text-dim);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .endpoints-list {
-            padding: 1.5rem 2rem;
-        }
-
-        .endpoint-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            margin-bottom: 0.75rem;
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .endpoint-item:hover {
-            background: var(--bg-darker);
-            border-color: var(--primary);
-            transform: translateX(8px);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.2);
-        }
-
-        .method-badge {
-            padding: 0.375rem 0.75rem;
-            border-radius: 6px;
-            font-weight: 700;
-            font-size: 0.75rem;
-            font-family: 'JetBrains Mono', monospace;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            min-width: 60px;
-            text-align: center;
-        }
-
-        .method-get {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-            border: 1px solid var(--success);
-        }
-
-        .method-post {
-            background: rgba(14, 165, 233, 0.2);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .method-put {
-            background: rgba(245, 158, 11, 0.2);
-            color: var(--warning);
-            border: 1px solid var(--warning);
-        }
-
-        .method-delete {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-
-        .method-patch {
-            background: rgba(139, 92, 246, 0.2);
-            color: var(--secondary);
-            border: 1px solid var(--secondary);
-        }
-
-        .endpoint-path {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--text);
-            flex: 1;
-        }
-
-        .endpoint-description {
-            color: var(--text-dim);
-            font-size: 0.875rem;
-            margin-left: auto;
-            padding-left: 1rem;
-        }
-
-        /* Base URL Card */
-        .base-url-card {
-            background: linear-gradient(135deg, var(--bg-card), var(--bg-dark));
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .base-url-label {
-            color: var(--text-dim);
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 1rem;
-        }
-
-        .base-url-value {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.25rem;
-            color: var(--primary);
-            background: var(--bg-darker);
-            padding: 1rem 1.5rem;
-            border-radius: 10px;
-            border: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .copy-btn {
-            background: var(--primary);
-            color: var(--text);
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Manrope', sans-serif;
-        }
-
-        .copy-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
-        }
-
-        /* Footer */
-        footer {
-            background: var(--bg-card);
-            border-top: 1px solid var(--border);
-            padding: 3rem 2rem;
-            margin-top: 6rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .footer-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: var(--primary);
-        }
-
-        .footer-text {
-            color: var(--text-dim);
-            font-size: 0.875rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .endpoint-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .endpoint-description {
-                margin-left: 0;
-                padding-left: 0;
-                margin-top: 0.5rem;
-            }
-        }
-
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 12px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-darker);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 6px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary);
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="animated-bg"></div>
@@ -563,8 +17,10 @@
                 MyZoo API
             </div>
             <ul class="nav-links">
-                <li><a href="#endpoints">Endpoints</a></li>
-                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="api.html">API Reference</a></li>
+                <li><a href="architecture.html">Architecture</a></li>
+                <li><a href="playground.html">Playground</a></li>
                 <li><a href="https://github.com" target="_blank">GitHub</a></li>
             </ul>
         </nav>
@@ -572,495 +28,185 @@
 
     <section class="hero">
         <div class="version-badge">API Version 1.0</div>
-        <h1>MyZoo API Documentation</h1>
-        <p>Complete RESTful API for veterinary clinic management, appointments, patient records, and prescriptions</p>
+        <h1>MyZoo</h1>
+        <p class="hero-subtitle">Complete Veterinary Clinic Management System</p>
+        <p class="hero-description">A modern, scalable RESTful API for managing veterinary clinics, appointments, patient records, and medical prescriptions</p>
+        
+        <div class="cta-buttons">
+            <a href="api.html" class="btn btn-primary">Explore API</a>
+            <a href="playground.html" class="btn btn-secondary">Try it Live</a>
+        </div>
     </section>
 
-    <div class="quick-stats">
-        <div class="stat-card">
-            <div class="stat-number">8</div>
-            <div class="stat-label">Categories</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">70+</div>
-            <div class="stat-label">Endpoints</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">REST</div>
-            <div class="stat-label">Architecture</div>
-        </div>
-        <div class="stat-card">
-            <div class="stat-number">JSON</div>
-            <div class="stat-label">Data Format</div>
-        </div>
-    </div>
-
     <div class="container">
-        <section class="section" id="getting-started">
-            <h2 class="section-title">Getting Started</h2>
-            <p class="section-description">Base URL for all API endpoints</p>
-            
-            <div class="base-url-card">
-                <div class="base-url-label">Base URL</div>
-                <div class="base-url-value">
-                    <span>https://api.myzoo.com/api/v1</span>
-                    <button class="copy-btn" onclick="copyBaseUrl()">Copy</button>
+        <!-- Features Section -->
+        <section class="section features-section">
+            <h2 class="section-title">Key Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>Secure Authentication</h3>
+                    <p>JWT-based authentication with refresh tokens, 2FA support, and Google OAuth integration for enhanced security</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Appointment Management</h3>
+                    <p>Complete appointment scheduling system with status tracking, automated reminders, and availability checking</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🐾</div>
+                    <h3>Patient Records</h3>
+                    <p>Comprehensive patient management with medical history, prescriptions, notifications, and detailed health tracking</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💊</div>
+                    <h3>Digital Prescriptions</h3>
+                    <p>Generate, manage, and download PDF prescriptions with full medication tracking and dosage information</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍⚕️</div>
+                    <h3>Veterinarian Portal</h3>
+                    <p>Dedicated vet management with specializations, schedules, patient assignments, and performance analytics</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📍</div>
+                    <h3>Multi-Location Support</h3>
+                    <p>Manage multiple clinic locations with address tracking, phone numbers, and location-based filtering</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⏰</div>
+                    <h3>Schedule Management</h3>
+                    <p>Flexible scheduling system with availability tracking, working hours, and automated conflict detection</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏥</div>
+                    <h3>Department Organization</h3>
+                    <p>Organize services by departments with specialized care units and departmental assignments</p>
                 </div>
             </div>
         </section>
 
-        <section class="section" id="endpoints">
-            <h2 class="section-title">API Endpoints</h2>
-            <p class="section-description">Explore all available endpoints organized by functionality</p>
+        <!-- Tech Stack Section -->
+        <section class="section tech-section">
+            <h2 class="section-title">Technology Stack</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon">⚙️</div>
+                    <h3>ASP.NET Core</h3>
+                    <p>Built with the latest .NET framework for high performance and scalability</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🗄️</div>
+                    <h3>Entity Framework Core</h3>
+                    <p>Robust ORM for efficient database operations and migrations</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🎯</div>
+                    <h3>Onion Architecture</h3>
+                    <p>Clean, maintainable architecture with clear separation of concerns</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🔄</div>
+                    <h3>RESTful API</h3>
+                    <p>Industry-standard REST architecture with JSON responses</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">🔒</div>
+                    <h3>JWT Authentication</h3>
+                    <p>Secure token-based authentication with refresh capabilities</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📊</div>
+                    <h3>SQL Server</h3>
+                    <p>Enterprise-grade relational database for data persistence</p>
+                </div>
+            </div>
+        </section>
 
-            <div class="endpoint-grid">
-                <!-- Account -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">👤</div>
-                            Account
-                        </div>
-                        <span class="category-count">8 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Account/login</span>
-                            <span class="endpoint-description">User authentication</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Account/login-google</span>
-                            <span class="endpoint-description">Google OAuth login</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Account/register-Patient</span>
-                            <span class="endpoint-description">Patient registration</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Account/logout</span>
-                            <span class="endpoint-description">End user session</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Account/try-refresh-token</span>
-                            <span class="endpoint-description">Refresh auth token</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Account/reset-password</span>
-                            <span class="endpoint-description">Password reset</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Account/verify-2fa</span>
-                            <span class="endpoint-description">Two-factor auth</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Account/get-user</span>
-                            <span class="endpoint-description">Get user details</span>
-                        </div>
+        <!-- Use Cases Section -->
+        <section class="section usecases-section">
+            <h2 class="section-title">Use Cases</h2>
+            <div class="usecases-grid">
+                <div class="usecase-card">
+                    <div class="usecase-number">01</div>
+                    <h3>Veterinary Clinics</h3>
+                    <p>Complete management solution for small to medium-sized veterinary practices with appointment scheduling, patient records, and billing</p>
+                </div>
+                <div class="usecase-card">
+                    <div class="usecase-number">02</div>
+                    <h3>Animal Hospitals</h3>
+                    <p>Enterprise-level system for larger animal hospitals with multiple departments, specialists, and locations</p>
+                </div>
+                <div class="usecase-card">
+                    <div class="usecase-number">03</div>
+                    <h3>Mobile Pet Care</h3>
+                    <p>Support for mobile veterinary services with location tracking, on-site appointment management, and digital records</p>
+                </div>
+                <div class="usecase-card">
+                    <div class="usecase-number">04</div>
+                    <h3>Pet Insurance Integration</h3>
+                    <p>API-first design enables seamless integration with pet insurance providers for claims and coverage verification</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Getting Started Section -->
+        <section class="section getting-started-section">
+            <h2 class="section-title">Getting Started</h2>
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Explore the API</h3>
+                        <p>Browse the comprehensive API documentation to understand available endpoints and their capabilities</p>
+                        <a href="api.html" class="step-link">View API Reference →</a>
                     </div>
                 </div>
-
-                <!-- Appointments -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">📅</div>
-                            Appointments
-                        </div>
-                        <span class="category-count">9 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Appointments</span>
-                            <span class="endpoint-description">List all appointments</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Appointments</span>
-                            <span class="endpoint-description">Create appointment</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Appointments/by-status</span>
-                            <span class="endpoint-description">Filter by status</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Appointments/{id}</span>
-                            <span class="endpoint-description">Get by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-put">PUT</span>
-                            <span class="endpoint-path">/Appointments/{id}</span>
-                            <span class="endpoint-description">Update appointment</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-delete">DELETE</span>
-                            <span class="endpoint-path">/Appointments/{id}</span>
-                            <span class="endpoint-description">Delete appointment</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Appointments/CreateAppointment-v2</span>
-                            <span class="endpoint-description">Create v2 format</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Appointments/update-by-details</span>
-                            <span class="endpoint-description">Update by details</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-patch">PATCH</span>
-                            <span class="endpoint-path">/Appointments/ChangeStatus/{id}</span>
-                            <span class="endpoint-description">Change status</span>
-                        </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Understand Architecture</h3>
+                        <p>Learn about the clean Onion Architecture pattern and how the system is structured</p>
+                        <a href="architecture.html" class="step-link">View Architecture →</a>
                     </div>
                 </div>
-
-                <!-- Department -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">🏥</div>
-                            Department
-                        </div>
-                        <span class="category-count">3 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Department/GetAllDepartments</span>
-                            <span class="endpoint-description">List departments</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Department/{id}</span>
-                            <span class="endpoint-description">Get by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Department</span>
-                            <span class="endpoint-description">Create department</span>
-                        </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Try the API</h3>
+                        <p>Test endpoints in real-time with our interactive API playground</p>
+                        <a href="playground.html" class="step-link">Open Playground →</a>
                     </div>
                 </div>
-
-                <!-- Location -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">📍</div>
-                            Location
-                        </div>
-                        <span class="category-count">7 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Location/GetLocationsByVet/{vetId}</span>
-                            <span class="endpoint-description">Get vet locations</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Location/GetLocations</span>
-                            <span class="endpoint-description">List all locations</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Location/SearchLocationsByName</span>
-                            <span class="endpoint-description">Search locations</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-patch">PATCH</span>
-                            <span class="endpoint-path">/Location/UpdateAddress/{id}</span>
-                            <span class="endpoint-description">Update address</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-patch">PATCH</span>
-                            <span class="endpoint-path">/Location/UpdatePhoneNumber/{id}</span>
-                            <span class="endpoint-description">Update phone</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Location/AddLocation</span>
-                            <span class="endpoint-description">Add location</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-delete">DELETE</span>
-                            <span class="endpoint-path">/Location/DeleteLocation/{id}</span>
-                            <span class="endpoint-description">Delete location</span>
-                        </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Integrate</h3>
+                        <p>Start building your application using our RESTful API and comprehensive documentation</p>
+                        <a href="https://github.com" class="step-link" target="_blank">View on GitHub →</a>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Patient -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">🐾</div>
-                            Patient
-                        </div>
-                        <span class="category-count">13 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient</span>
-                            <span class="endpoint-description">List all patients</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Patient</span>
-                            <span class="endpoint-description">Create patient</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/active</span>
-                            <span class="endpoint-description">Active patients</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/{id}</span>
-                            <span class="endpoint-description">Get by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-put">PUT</span>
-                            <span class="endpoint-path">/Patient/{id}</span>
-                            <span class="endpoint-description">Update patient</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-delete">DELETE</span>
-                            <span class="endpoint-path">/Patient/{id}</span>
-                            <span class="endpoint-description">Delete patient</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/search</span>
-                            <span class="endpoint-description">Search patients</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/with-appointments</span>
-                            <span class="endpoint-description">With appointments</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/{id}/with-prescriptions</span>
-                            <span class="endpoint-description">With prescriptions</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/{id}/with-notifications</span>
-                            <span class="endpoint-description">With notifications</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/summary</span>
-                            <span class="endpoint-description">Patient summary</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Patient/{id}/upcoming-appointments</span>
-                            <span class="endpoint-description">Upcoming visits</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Patient/{id}/deactivate</span>
-                            <span class="endpoint-description">Deactivate patient</span>
-                        </div>
-                    </div>
+        <!-- Stats Section -->
+        <section class="section stats-section">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value">70+</div>
+                    <div class="stat-label">API Endpoints</div>
                 </div>
-
-                <!-- Prescription -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">💊</div>
-                            Prescription
-                        </div>
-                        <span class="category-count">4 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Prescription/Create</span>
-                            <span class="endpoint-description">Create prescription</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-put">PUT</span>
-                            <span class="endpoint-path">/Prescription/Update/{id}</span>
-                            <span class="endpoint-description">Update prescription</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-delete">DELETE</span>
-                            <span class="endpoint-path">/Prescription/Delete/{id}</span>
-                            <span class="endpoint-description">Delete prescription</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Prescription/GetPdf/{id}</span>
-                            <span class="endpoint-description">Download PDF</span>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Core Modules</div>
                 </div>
-
-                <!-- ScheduleTime -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">⏰</div>
-                            Schedule Time
-                        </div>
-                        <span class="category-count">6 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/ScheduleTime</span>
-                            <span class="endpoint-description">List schedules</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/ScheduleTime</span>
-                            <span class="endpoint-description">Create schedule</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/ScheduleTime/{id}</span>
-                            <span class="endpoint-description">Get by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-put">PUT</span>
-                            <span class="endpoint-path">/ScheduleTime/{id}</span>
-                            <span class="endpoint-description">Update schedule</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-delete">DELETE</span>
-                            <span class="endpoint-path">/ScheduleTime/{id}</span>
-                            <span class="endpoint-description">Delete schedule</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/ScheduleTime/available</span>
-                            <span class="endpoint-description">Available times</span>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-value">100%</div>
+                    <div class="stat-label">RESTful</div>
                 </div>
-
-                <!-- Vet -->
-                <div class="endpoint-category">
-                    <div class="category-header">
-                        <div class="category-title">
-                            <div class="category-icon">👨‍⚕️</div>
-                            Veterinarian
-                        </div>
-                        <span class="category-count">20 endpoints</span>
-                    </div>
-                    <div class="endpoints-list">
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetAllVet</span>
-                            <span class="endpoint-description">List all vets</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetById/{id}</span>
-                            <span class="endpoint-description">Get by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetByName</span>
-                            <span class="endpoint-description">Search by name</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/VetWithAppointmentsAndPatientsAndLocatio</span>
-                            <span class="endpoint-description">Full details</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetWithAppointmentsById/{id}</span>
-                            <span class="endpoint-description">With appointments</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetsWithScheduleTimes</span>
-                            <span class="endpoint-description">With schedules</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetWithScheduleTimesById/{id}</span>
-                            <span class="endpoint-description">Schedule by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetsWithPrescriptions</span>
-                            <span class="endpoint-description">With prescriptions</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetWithPrescriptionsById/{id}</span>
-                            <span class="endpoint-description">Prescriptions by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetsWithNotifications</span>
-                            <span class="endpoint-description">With notifications</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetWithNotificationsById/{id}</span>
-                            <span class="endpoint-description">Notifications by ID</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetActiveVets</span>
-                            <span class="endpoint-description">Active vets only</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/GetVetsByDepartment/{departmentId}</span>
-                            <span class="endpoint-description">By department</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/CountVets</span>
-                            <span class="endpoint-description">Count total vets</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/SearchVetsByName</span>
-                            <span class="endpoint-description">Search by name</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-get">GET</span>
-                            <span class="endpoint-path">/Vet/vet-Pendingappointments/{doctorId}</span>
-                            <span class="endpoint-description">Pending appts</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-post">POST</span>
-                            <span class="endpoint-path">/Vet/AddVet</span>
-                            <span class="endpoint-description">Add new vet</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-put">PUT</span>
-                            <span class="endpoint-path">/Vet/UpdateVet/{id}</span>
-                            <span class="endpoint-description">Update vet</span>
-                        </div>
-                        <div class="endpoint-item">
-                            <span class="method-badge method-delete">DELETE</span>
-                            <span class="endpoint-path">/Vet/DeleteVet/{id}</span>
-                            <span class="endpoint-description">Delete vet</span>
-                        </div>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-value">JWT</div>
+                    <div class="stat-label">Secure Auth</div>
                 </div>
             </div>
         </section>
@@ -1068,52 +214,44 @@
 
     <footer>
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="#endpoints">API Endpoints</a>
-                <a href="#getting-started">Getting Started</a>
-                <a href="https://github.com" target="_blank">GitHub</a>
-                <a href="#" target="_blank">Support</a>
+            <div class="footer-section">
+                <div class="logo">
+                    <div class="logo-icon">🦁</div>
+                    MyZoo API
+                </div>
+                <p class="footer-description">Modern veterinary clinic management system with comprehensive API</p>
             </div>
-            <p class="footer-text">© 2026 MyZoo API. All rights reserved.</p>
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="api.html">API Reference</a></li>
+                    <li><a href="architecture.html">Architecture</a></li>
+                    <li><a href="playground.html">API Playground</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://github.com" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">API Status</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Changelog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Stack Overflow</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 MyZoo API. All rights reserved.</p>
         </div>
     </footer>
-
-    <script>
-        function copyBaseUrl() {
-            const baseUrl = 'https://api.myzoo.com/api/v1';
-            navigator.clipboard.writeText(baseUrl).then(() => {
-                const btn = event.target;
-                const originalText = btn.textContent;
-                btn.textContent = 'Copied!';
-                btn.style.background = '#10B981';
-                setTimeout(() => {
-                    btn.textContent = originalText;
-                    btn.style.background = '#0EA5E9';
-                }, 2000);
-            });
-        }
-
-        // Add smooth reveal animations on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.endpoint-category').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
 </body>
 </html>
