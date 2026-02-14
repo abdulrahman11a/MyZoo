@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Reference - MyZoo API Documentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles.css">
     <style>
         :root {
             --primary: #0EA5E9;
@@ -564,10 +564,10 @@
                 MyZoo API
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="api.html" class="active">API Reference</a></li>
-                <li><a href="architecture.html">Architecture</a></li>
-                <li><a href="playground.html">Playground</a></li>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./api.html" class="active">API Reference</a></li>
+                <li><a href="./architecture.html">Architecture</a></li>
+                <li><a href="./playground.html">Playground</a></li>
                 <li><a href="https://github.com" target="_blank">GitHub</a></li>
             </ul>
         </nav>
@@ -1071,11 +1071,14 @@
 
     <footer>
         <div class="footer-content">
-            <div class="footer-links">
-                <a href="#endpoints">API Endpoints</a>
-                <a href="#getting-started">Getting Started</a>
-                <a href="https://github.com" target="_blank">GitHub</a>
-                <a href="#" target="_blank">Support</a>
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./api.html">API Reference</a></li>
+                    <li><a href="./architecture.html">Architecture</a></li>
+                    <li><a href="./playground.html">API Playground</a></li>
+                </ul>
             </div>
             <p class="footer-text">© 2026 MyZoo API. All rights reserved.</p>
         </div>
