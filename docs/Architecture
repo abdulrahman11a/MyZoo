@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - MyZoo API Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .architecture-hero {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-dark));
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            border: 1px solid var(--border);
+        }
+
+        .architecture-hero h2 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .onion-diagram {
+            max-width: 800px;
+            margin: 3rem auto;
+            position: relative;
+        }
+
+        .onion-layer {
+            position: relative;
+            margin: 0 auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .onion-layer:hover {
+            transform: scale(1.02);
+        }
+
+        .layer-core {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+            border: 3px solid #A78BFA;
+            z-index: 4;
+        }
+
+        .layer-domain {
+            width: 350px;
+            height: 350px;
+            background: linear-gradient(135deg, #0EA5E9, #0284C7);
+            border: 3px solid #38BDF8;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 3;
+        }
+
+        .layer-application {
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, #10B981, #059669);
+            border: 3px solid #34D399;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+        }
+
+        .layer-infrastructure {
+            width: 650px;
+            height: 650px;
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            border: 3px solid #FBBF24;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+
+        .layer-label {
+            font-weight: 800;
+            font-size: 1.125rem;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .layer-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .layer-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .layer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(14, 165, 233, 0.2);
+            border-color: var(--primary);
+        }
+
+        .layer-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .layer-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+
+        .layer-icon-core {
+            background: linear-gradient(135deg, #8B5CF6, #6D28D9);
+        }
+
+        .layer-icon-domain {
+            background: linear-gradient(135deg, #0EA5E9, #0284C7);
+        }
+
+        .layer-icon-application {
+            background: linear-gradient(135deg, #10B981, #059669);
+        }
+
+        .layer-icon-infrastructure {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+        }
+
+        .layer-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .layer-card h4 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin: 1.5rem 0 1rem;
+            color: var(--primary);
+        }
+
+        .layer-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .layer-card li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-dim);
+        }
+
+        .layer-card li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .principles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .principle-card {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-dark));
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .principle-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+
+        .principle-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .principle-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+
+        .benefits-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 4rem;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .benefit-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .benefit-content h4 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit-content p {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+        }
+
+        .code-example {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .code-example pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--text);
+            margin: 0;
+        }
+
+        .code-title {
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-title::before {
+            content: '📄';
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <div class="logo-icon">🦁</div>
+                MyZoo API
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="api.html">API Reference</a></li>
+                <li><a href="architecture.html" class="active">Architecture</a></li>
+                <li><a href="playground.html">Playground</a></li>
+                <li><a href="https://github.com" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Architecture</h1>
+        <p class="hero-description">Clean, maintainable, and scalable system design using Onion Architecture pattern</p>
+    </section>
+
+    <div class="container">
+        <div class="architecture-hero">
+            <h2>Onion Architecture</h2>
+            <p style="color: var(--text-dim); font-size: 1.125rem; max-width: 700px; margin: 0 auto;">
+                A clean architecture pattern that emphasizes separation of concerns, dependency inversion, and maintainability through layered design
+            </p>
+        </div>
+
+        <!-- Visual Diagram -->
+        <section class="section">
+            <div class="onion-diagram">
+                <div class="onion-layer layer-infrastructure">
+                    <span class="layer-label">Infrastructure</span>
+                </div>
+                <div class="onion-layer layer-application">
+                    <span class="layer-label">Application</span>
+                </div>
+                <div class="onion-layer layer-domain">
+                    <span class="layer-label">Domain</span>
+                </div>
+                <div class="onion-layer layer-core">
+                    <span class="layer-label">Core</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layer Details -->
+        <section class="section">
+            <h2 class="section-title">Architecture Layers</h2>
+            
+            <div class="layer-details">
+                <!-- Core Layer -->
+                <div class="layer-card">
+                    <div class="layer-card-header">
+                        <div class="layer-icon layer-icon-core">🎯</div>
+                        <h3>Core Layer</h3>
+                    </div>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
+                        The innermost layer containing business entities and core business logic. This layer has no dependencies on other layers.
+                    </p>
+                    <h4>Contains:</h4>
+                    <ul>
+                        <li>Domain Entities (Patient, Vet, Appointment)</li>
+                        <li>Value Objects</li>
+                        <li>Domain Events</li>
+                        <li>Enumerations</li>
+                        <li>Core Interfaces</li>
+                    </ul>
+                    <div class="code-example">
+                        <div class="code-title">Patient.cs</div>
+                        <pre>public class Patient
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Species { get; set; }
+    public DateTime DateOfBirth { get; set; }
+    public string OwnerId { get; set; }
+    public bool IsActive { get; set; }
+    
+    // Navigation Properties
+    public ICollection&lt;Appointment&gt; Appointments { get; set; }
+    public ICollection&lt;Prescription&gt; Prescriptions { get; set; }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- Domain Layer -->
+                <div class="layer-card">
+                    <div class="layer-card-header">
+                        <div class="layer-icon layer-icon-domain">⚙️</div>
+                        <h3>Domain Layer</h3>
+                    </div>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
+                        Contains domain services, repository interfaces, and business rules. Depends only on the Core layer.
+                    </p>
+                    <h4>Contains:</h4>
+                    <ul>
+                        <li>Repository Interfaces (IPatientRepository)</li>
+                        <li>Domain Services</li>
+                        <li>Business Rules & Validations</li>
+                        <li>Domain Exceptions</li>
+                        <li>Specifications</li>
+                    </ul>
+                    <div class="code-example">
+                        <div class="code-title">IPatientRepository.cs</div>
+                        <pre>public interface IPatientRepository
+{
+    Task&lt;Patient&gt; GetByIdAsync(int id);
+    Task&lt;IEnumerable&lt;Patient&gt;&gt; GetAllAsync();
+    Task&lt;IEnumerable&lt;Patient&gt;&gt; GetActiveAsync();
+    Task&lt;Patient&gt; AddAsync(Patient patient);
+    Task UpdateAsync(Patient patient);
+    Task DeleteAsync(int id);
+    Task&lt;IEnumerable&lt;Patient&gt;&gt; SearchByNameAsync(string name);
+}</pre>
+                    </div>
+                </div>
+
+                <!-- Application Layer -->
+                <div class="layer-card">
+                    <div class="layer-card-header">
+                        <div class="layer-icon layer-icon-application">🔧</div>
+                        <h3>Application Layer</h3>
+                    </div>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
+                        Orchestrates business logic and use cases. Contains application services, DTOs, and mappers.
+                    </p>
+                    <h4>Contains:</h4>
+                    <ul>
+                        <li>Application Services</li>
+                        <li>DTOs (Data Transfer Objects)</li>
+                        <li>AutoMapper Profiles</li>
+                        <li>Use Case Implementations</li>
+                        <li>Application Interfaces</li>
+                        <li>Command & Query Handlers (CQRS)</li>
+                    </ul>
+                    <div class="code-example">
+                        <div class="code-title">PatientService.cs</div>
+                        <pre>public class PatientService : IPatientService
+{
+    private readonly IPatientRepository _repository;
+    private readonly IMapper _mapper;
+    
+    public PatientService(
+        IPatientRepository repository, 
+        IMapper mapper)
+    {
+        _repository = repository;
+        _mapper = mapper;
+    }
+    
+    public async Task&lt;PatientDto&gt; CreatePatientAsync(
+        CreatePatientDto dto)
+    {
+        var patient = _mapper.Map&lt;Patient&gt;(dto);
+        var created = await _repository.AddAsync(patient);
+        return _mapper.Map&lt;PatientDto&gt;(created);
+    }
+}</pre>
+                    </div>
+                </div>
+
+                <!-- Infrastructure Layer -->
+                <div class="layer-card">
+                    <div class="layer-card-header">
+                        <div class="layer-icon layer-icon-infrastructure">🗄️</div>
+                        <h3>Infrastructure Layer</h3>
+                    </div>
+                    <p style="color: var(--text-dim); margin-bottom: 1.5rem;">
+                        The outermost layer containing implementations of interfaces defined in inner layers. Handles external concerns.
+                    </p>
+                    <h4>Contains:</h4>
+                    <ul>
+                        <li>Entity Framework DbContext</li>
+                        <li>Repository Implementations</li>
+                        <li>External Service Integrations</li>
+                        <li>File System Access</li>
+                        <li>Email Services</li>
+                        <li>API Controllers</li>
+                        <li>Authentication & Authorization</li>
+                    </ul>
+                    <div class="code-example">
+                        <div class="code-title">PatientRepository.cs</div>
+                        <pre>public class PatientRepository : IPatientRepository
+{
+    private readonly ApplicationDbContext _context;
+    
+    public PatientRepository(ApplicationDbContext context)
+    {
+        _context = context;
+    }
+    
+    public async Task&lt;Patient&gt; GetByIdAsync(int id)
+    {
+        return await _context.Patients
+            .Include(p => p.Appointments)
+            .Include(p => p.Prescriptions)
+            .FirstOrDefaultAsync(p => p.Id == id);
+    }
+    
+    public async Task&lt;IEnumerable&lt;Patient&gt;&gt; GetActiveAsync()
+    {
+        return await _context.Patients
+            .Where(p => p.IsActive)
+            .ToListAsync();
+    }
+}</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architecture Principles -->
+        <section class="section">
+            <h2 class="section-title">Core Principles</h2>
+            
+            <div class="principles-grid">
+                <div class="principle-card">
+                    <div class="principle-number">01</div>
+                    <h3>Dependency Inversion</h3>
+                    <p style="color: var(--text-dim);">
+                        Inner layers define interfaces, outer layers implement them. Dependencies point inward, never outward.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-number">02</div>
+                    <h3>Separation of Concerns</h3>
+                    <p style="color: var(--text-dim);">
+                        Each layer has a specific responsibility and doesn't concern itself with the details of other layers.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-number">03</div>
+                    <h3>Testability</h3>
+                    <p style="color: var(--text-dim);">
+                        Business logic is isolated from external dependencies, making unit testing straightforward and reliable.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-number">04</div>
+                    <h3>Maintainability</h3>
+                    <p style="color: var(--text-dim);">
+                        Clear boundaries between layers make the codebase easier to understand, modify, and extend.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-number">05</div>
+                    <h3>Technology Independence</h3>
+                    <p style="color: var(--text-dim);">
+                        Core business logic is independent of frameworks, databases, and external services.
+                    </p>
+                </div>
+
+                <div class="principle-card">
+                    <div class="principle-number">06</div>
+                    <h3>Domain-Driven Design</h3>
+                    <p style="color: var(--text-dim);">
+                        Business domain is at the center, with all other concerns built around it.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits -->
+        <section class="section">
+            <div class="benefits-section">
+                <h2 style="text-align: center; margin-bottom: 1rem;">Benefits of Onion Architecture</h2>
+                <p style="text-align: center; color: var(--text-dim); margin-bottom: 2rem;">
+                    Why we chose this architecture pattern for MyZoo API
+                </p>
+                
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">✅</div>
+                        <div class="benefit-content">
+                            <h4>Easy Testing</h4>
+                            <p>Business logic can be tested without databases or external services</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔄</div>
+                        <div class="benefit-content">
+                            <h4>Flexible Changes</h4>
+                            <p>Replace databases or frameworks without affecting business rules</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">📚</div>
+                        <div class="benefit-content">
+                            <h4>Clear Structure</h4>
+                            <p>Developers can quickly understand where to find or add code</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🚀</div>
+                        <div class="benefit-content">
+                            <h4>Scalable</h4>
+                            <p>Easy to add new features without breaking existing functionality</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">🔒</div>
+                        <div class="benefit-content">
+                            <h4>Protected Core</h4>
+                            <p>Business logic is insulated from external changes and failures</p>
+                        </div>
+                    </div>
+
+                    <div class="benefit-item">
+                        <div class="benefit-icon">👥</div>
+                        <div class="benefit-content">
+                            <h4>Team Productivity</h4>
+                            <p>Multiple developers can work on different layers simultaneously</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Structure -->
+        <section class="section">
+            <h2 class="section-title">Project Structure</h2>
+            
+            <div class="code-example">
+                <div class="code-title">Solution Structure</div>
+                <pre>MyZoo.Solution/
+│
+├── MyZoo.Core/                    # Core Layer (No Dependencies)
+│   ├── Entities/
+│   │   ├── Patient.cs
+│   │   ├── Vet.cs
+│   │   ├── Appointment.cs
+│   │   ├── Prescription.cs
+│   │   └── ...
+│   ├── Enums/
+│   └── Interfaces/
+│
+├── MyZoo.Domain/                  # Domain Layer (Depends on Core)
+│   ├── Interfaces/
+│   │   ├── IPatientRepository.cs
+│   │   ├── IVetRepository.cs
+│   │   └── ...
+│   ├── Services/
+│   └── Specifications/
+│
+├── MyZoo.Application/             # Application Layer (Depends on Domain & Core)
+│   ├── DTOs/
+│   │   ├── PatientDto.cs
+│   │   ├── CreatePatientDto.cs
+│   │   └── ...
+│   ├── Interfaces/
+│   │   └── IPatientService.cs
+│   ├── Services/
+│   │   └── PatientService.cs
+│   ├── Mappings/
+│   │   └── AutoMapperProfile.cs
+│   └── Validators/
+│
+├── MyZoo.Infrastructure/          # Infrastructure Layer (Depends on All)
+│   ├── Data/
+│   │   ├── ApplicationDbContext.cs
+│   │   └── Configurations/
+│   ├── Repositories/
+│   │   ├── PatientRepository.cs
+│   │   └── ...
+│   ├── Services/
+│   │   ├── EmailService.cs
+│   │   └── PdfService.cs
+│   └── Identity/
+│       └── ApplicationUser.cs
+│
+└── MyZoo.API/                     # Presentation Layer (Entry Point)
+    ├── Controllers/
+    │   ├── PatientController.cs
+    │   ├── VetController.cs
+    │   ├── AppointmentController.cs
+    │   └── ...
+    ├── Middleware/
+    ├── Extensions/
+    ├── appsettings.json
+    └── Program.cs</pre>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="logo">
+                    <div class="logo-icon">🦁</div>
+                    MyZoo API
+                </div>
+                <p class="footer-description">Modern veterinary clinic management system with comprehensive API</p>
+            </div>
+            <div class="footer-section">
+                <h4>Documentation</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="api.html">API Reference</a></li>
+                    <li><a href="architecture.html">Architecture</a></li>
+                    <li><a href="playground.html">API Playground</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="https://github.com" target="_blank">GitHub Repository</a></li>
+                    <li><a href="#">API Status</a></li>
+                    <li><a href="#">Support</a></li>
+                    <li><a href="#">Changelog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Community</h4>
+                <ul>
+                    <li><a href="#">Discord</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Stack Overflow</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 MyZoo API. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
