@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Playground - MyZoo API Documentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles.css">
     <style>
         .playground-container {
             display: grid;
@@ -382,10 +382,10 @@
                 MyZoo API
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="api.html">API Reference</a></li>
-                <li><a href="architecture.html">Architecture</a></li>
-                <li><a href="playground.html" class="active">Playground</a></li>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="./api.html">API Reference</a></li>
+                <li><a href="./architecture.html">Architecture</a></li>
+                <li><a href="./playground.html" class="active">Playground</a></li>
                 <li><a href="https://github.com" target="_blank">GitHub</a></li>
             </ul>
         </nav>
@@ -567,10 +567,10 @@
             <div class="footer-section">
                 <h4>Documentation</h4>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="api.html">API Reference</a></li>
-                    <li><a href="architecture.html">Architecture</a></li>
-                    <li><a href="playground.html">API Playground</a></li>
+                    <li><a href="./index.html">Home</a></li>
+                    <li><a href="./api.html">API Reference</a></li>
+                    <li><a href="./architecture.html">Architecture</a></li>
+                    <li><a href="./playground.html">API Playground</a></li>
                 </ul>
             </div>
             <div class="footer-section">
